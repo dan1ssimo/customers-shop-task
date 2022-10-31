@@ -1,0 +1,21 @@
+version: '3.3'
+services:
+  sqlite:
+    image: nouchka/sqlite3:latest
+    ports:
+      - "9000:9000"
+    stdin_open: true
+    tty: true
+    environment:
+      - SQLALCHEMY_DATABASE_URL = "sqlite:///./sql_app.db"
+    volumes:
+      - sqlite:///./sql_app.db
+    restart: unless-stopped
+  web:
+    build: .
+    volumes:
+      - C:\Users\Danil\Desktop\solution\customers-shop-task\task_2:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - sqlite

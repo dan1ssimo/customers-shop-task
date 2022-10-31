@@ -1,26 +1,21 @@
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
+from sqlalchemy import Table, Column, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
+from sqlalchemy.ext.associationproxy import association_proxy
+from database import Base
 
-from .database import Base
+product_categories = Table('product_categories', Base.metadata,
+    Column('product_id', ForeignKey('product.product_id'), primary_key=True),
+    Column('category_id', ForeignKey('category.category_id'), primary_key=True)
+)
 
+class Product(Base):
+    __tablename__ = 'product'
+    product_id = Column(Integer, primary_key=True)
+    product_name = Column(String, nullable=False)
+    categories = relationship("Category", secondary="product_category", back_populates='product')
 
-class User(Base):
-    __tablename__ = "users"
-
-    id = Column(Integer, primary_key=True, index=True)
-    email = Column(String, unique=True, index=True)
-    hashed_password = Column(String)
-    is_active = Column(Boolean, default=True)
-
-    items = relationship("Item", back_populates="owner")
-
-
-class Item(Base):
-    __tablename__ = "items"
-
-    id = Column(Integer, primary_key=True, index=True)
-    title = Column(String, index=True)
-    description = Column(String, index=True)
-    owner_id = Column(Integer, ForeignKey("users.id"))
-
-    owner = relationship("User", back_populates="items")
+class Category(Base):
+    __tablename__ = 'category'
+    category_id = Column(Integer, primary_key=True)
+    category_name = Column(String, nullable=False)
+    products = relationship("Product", secondary="product_category", back_populates='category')
