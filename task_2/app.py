@@ -5,7 +5,6 @@ from fastapi import Depends, FastAPI
 from sqlalchemy.orm import joinedload
 
 import sys
-
 sys.path.append('..')
 
 from core.models import Product, Category
@@ -72,4 +71,4 @@ async def get_categories(db: session = Depends(get_db)):
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="localhost", port=8895)
