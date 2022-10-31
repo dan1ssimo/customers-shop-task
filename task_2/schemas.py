@@ -1,23 +1,26 @@
 from pydantic import BaseModel
+from typing import List
+
 
 class ProductBase(BaseModel):
-    product_id: int
-    product_name: str
+    id: int
+    name: str
 
     class Config:
         orm_mode = True
 
 
 class CategoryBase(BaseModel):
-    category_id: int
-    category_name: str
+    id: int
+    name: str
 
     class Config:
         orm_mode = True
 
 
 class CategorySchema(CategoryBase):
-    authors: list[ProductBase]
+    products: List[ProductBase]
+
 
 class ProductSchema(ProductBase):
-    books: list[CategoryBase]
+    categories: List[CategoryBase]
