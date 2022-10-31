@@ -1,6 +1,7 @@
 from sqlalchemy import Table, Column, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
-from database import Base
+
+from task_2.core.settings import Base
 
 product_categories = Table('product_categories', Base.metadata,
                            Column('product_id', ForeignKey('products.id'), primary_key=True),

@@ -1,15 +1,20 @@
-from fastapi import Depends, FastAPI
 from typing import List
-from models import Product, Category, product_categories
-from schemas import ProductBase, CategoryBase, CategorySchema, ProductSchema
-from database import Session, engine, Base
+
 import uvicorn
+from fastapi import Depends, FastAPI
 from sqlalchemy.orm import joinedload
+
+import sys
+
+sys.path.append('..')
+
+from core.models import Product, Category
+from core.schemas import CategorySchema, ProductSchema
+from core import Session, engine, Base
 
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Online-Shop")
-
 
 with Session() as session:
     category1 = Category(name="Laptops and computers")
@@ -27,7 +32,6 @@ with Session() as session:
     session.commit()
 
 
-# Dependency
 def get_db():
     db = session
     try:
