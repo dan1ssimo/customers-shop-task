@@ -18,16 +18,19 @@ app = FastAPI(title="Online-Shop")
 with Session() as session:
     category1 = Category(name="Laptops and computers")
     category2 = Category(name="Apple laptops")
-    category3 = Category(name="beauty and health")
+    category3 = Category(name="Apple Technologies")
+    category4 = Category(name="beauty and health")
 
     product1 = Product(name="MacBook Air (M2)")
-    product2 = Product(name="MacBook Pro (M1) Late 2020")
-    product3 = Product(name="Shark plush toy")
+    product2 = Product(name="Apple Watch 7")
+    product3 = Product(name="HUAWEI Matebook D14")
+    product4 = Product(name="Shark plush toy")
 
-    product1.categories = [category1, category2]
-    product2.categories = [category1, category2]
+    product1.categories = [category1, category2, category3]
+    product2.categories = [category3]
+    product3.categories = [category1]
 
-    session.add_all([product1, product2, product3, category1, category2, category3])
+    session.add_all([product1, product2, product3, product4, category1, category2, category3, category4])
     session.commit()
 
 
