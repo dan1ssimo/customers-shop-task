@@ -1,21 +1,14 @@
-version: '3.3'
+version: '3.8'
 services:
-  sqlite:
-    image: nouchka/sqlite3:latest
-    ports:
-      - "9000:9000"
-    stdin_open: true
-    tty: true
-    environment:
-      - SQLALCHEMY_DATABASE_URL = "sqlite:///./sql_app.db"
-    volumes:
-      - sqlite:///./sql_app.db
-    restart: unless-stopped
   web:
     build: .
+    container_name: fastapi-service
     volumes:
-      - C:\Users\Danil\Desktop\solution\customers-shop-task\task_2:/app
+      - /home/user/Desktop/personal-projects/customers-shop-task:/app
+    environment:
+      PORT: 8895
     ports:
-      - "8000:8000"
-    depends_on:
-      - sqlite
+      - "8895:8895"
+    tty: true
+    stdin_open: true
+    restart: "no"
